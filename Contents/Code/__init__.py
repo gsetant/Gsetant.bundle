@@ -52,6 +52,7 @@ class GsetantForMoviesAgent(Agent.Movies):
         values = {
             'name': Prefs['Gsetant_LoginName'],
             'password': Prefs['Gsetant_LoginPassword'],
+            'autoFlag': False,
             'video_ratingKey': Video_ratingKey,
             'video_title': Video_title,
             'part_file': Part_file,
