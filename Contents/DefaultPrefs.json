@@ -1,20 +1,14 @@
 [
     {
         "id": "Gsetant_api",
-        "label": "Gsetant API",
+        "label": "Gsetant API Address",
         "type": "text",
         "default": ""
     },
     {
-        "id": "Gsetant_LoginName",
-        "label": "Gsetant-用户名",
+        "id": "Gsetant_token",
+        "label": "Gsetant-Token",
         "type": "text",
         "default": ""
     },
-    {
-        "id": "Gsetant_LoginPassword",
-        "label": "Gsetant-密码",
-        "type": "text",
-        "default": ""
-    }
 ]

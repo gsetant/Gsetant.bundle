@@ -50,8 +50,7 @@ class GsetantForMoviesAgent(Agent.Movies):
         HTTP.ClearCache()
         HTTP.CacheTime = CACHE_1MONTH
         values = {
-            'name': Prefs['Gsetant_LoginName'],
-            'password': Prefs['Gsetant_LoginPassword'],
+            'token': Prefs['Gsetant_token'],
             'autoFlag': False,
             'video_ratingKey': Video_ratingKey,
             'video_title': Video_title,
