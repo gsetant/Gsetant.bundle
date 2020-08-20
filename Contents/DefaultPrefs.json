@@ -1,7 +1,13 @@
 [
     {
-        "id": "Gsetant_api",
+        "id": "Gsetant_api_host",
         "label": "Gsetant API Address",
+        "type": "text",
+        "default": ""
+    },
+    {
+        "id": "Gsetant_api_port",
+        "label": "Gsetant API port",
         "type": "text",
         "default": ""
     },

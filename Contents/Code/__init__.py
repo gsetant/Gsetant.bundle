@@ -3,11 +3,11 @@
 import base64
 import json
 from lxml import etree
-
+from datetime import datetime
 
 PREFIX = '/video/Gsetant'
 NAME = 'Gsetant'
-VERSION='Beta:0.0.1'
+VERSION = 'Beta:0.0.1'
 PMS_URL = 'http://127.0.0.1:32400/'
 
 timeout = 3600
@@ -18,7 +18,7 @@ def Start():
 
 
 class GsetantForMoviesAgent(Agent.Movies):
-    name = NAME+' Movie '+VERSION
+    name = NAME + ' Movie ' + VERSION
     languages = [
         Locale.Language.English,
         Locale.Language.Chinese
@@ -33,7 +33,7 @@ class GsetantForMoviesAgent(Agent.Movies):
     ]
 
     def search(self, results, media, lang, manual):
-        
+
         tc = ToolsClass()
         library_url = 'http://127.0.0.1:32400/library/metadata/%s' % media.id
         base_result = HTTP.Request(library_url, timeout=timeout).content
@@ -44,8 +44,7 @@ class GsetantForMoviesAgent(Agent.Movies):
         Video_type = xml.xpath('//Video/@type')[0]
         Video_librarySectionTitle = xml.xpath(
             '//Video/@librarySectionTitle')[0]
-        Video_librarySectionID = xml.xpath('//Video/@librarySectionID')[0]  
-        
+        Video_librarySectionID = xml.xpath('//Video/@librarySectionID')[0]
 
         HTTP.ClearCache()
         HTTP.CacheTime = CACHE_1MONTH
@@ -60,29 +59,62 @@ class GsetantForMoviesAgent(Agent.Movies):
             'video_librarySectionTitle': Video_librarySectionTitle
         }
 
+        result = None
 
-        result=None
-
-        try:            
-            result = HTTP.Request(tc.convertHttp(
-                Prefs['Gsetant_api']), values=values, timeout=timeout)
+        try:
+            result = HTTP.Request('%s:%s/scan' % (Prefs['Gsetant_api_host'], Prefs['Gsetant_api_port']),
+                                  data=json.dumps(values),
+                                  timeout=timeout).content
         except Exception as ex:
-            Log(ex)        
-        
+            Log(ex)
+
         if result is not None:
-            JsonDataList = json.loads(result)
-            for JsonDate in JsonDataList:
-                id = base64.b64encode('')
-                name=''
-                score = 100 
-                year = '2015'
-                thumb=''
-                new_result = dict(id=id, name=name, year=year, score=score, lang=lang, thumb=thumb)
-                results.Append(MetadataSearchResult(**new_result))
+            json_data_list = json.loads(result)
+            if json_data_list['state']:
+                for json_data in json_data_list['meta_data']:
+                    id = json.dumps(json_data)
+                    name = json_data.get('title')
+                    score = 100
+                    year = json_data.get('year')
+                    thumb = ''
+                    new_result = dict(id=id, name=name, year=year, score=score, lang=lang, thumb=thumb)
+                    results.Append(MetadataSearchResult(**new_result))
+
+    def update(self, metadata, media, lang):
+        json_data_list = json.loads(metadata.id)
+        metadata.title = json_data_list.get('title')
+        metadata.original_title = json_data_list.get('original_title')
+        metadata.summary = json_data_list.get('summary')
+        metadata.studio = json_data_list.get('studio')
+        for collection in json_data_list.get('collections').split(','):
+            metadata.collections.add(collection)
+        metadata.originally_available_at = datetime.strptime(
+            json_data_list.get('originally_available_at').replace('/', '-'), r'%Y-%m-%d')
+        metadata.year = int(json_data_list.get('year').replace('/', '-').split('-')[0])
+        metadata.directors.clear()
+        metadata.directors.new().name = json_data_list.get('directors')
+        genres_list = json_data_list.get('category').split(',')
+        for genres_name in genres_list:
+            metadata.genres.add(genres_name)
+        poster = base64.b64decode(json_data_list.get('poster'))
+        metadata.posters[json_data_list.get('poster')] = Proxy.Media(poster)
+        art = base64.b64decode(json_data_list.get('thumbnail'))
+        metadata.art[json_data_list.get('thumbnail')] = Proxy.Media(art)
+        metadata.content_rating = 'R18'
+
+        metadata.roles.clear()
+        actors_list = json_data_list.get('actor')
+        if actors_list != '':
+            for key in actors_list:
+                role = metadata.roles.new()
+                role.name = key
+                actor_base64 = actors_list.get(key)
+                actor_img = base64.b64decode(actor_base64)
+                role.photo = Proxy.Media(actor_img)
 
 
 class GsetantForTVShowAgent(Agent.TV_Shows):
-    name = NAME+' TV_Show '+VERSION
+    name = NAME + ' TV_Show ' + VERSION
     pass
 
 
@@ -92,8 +124,8 @@ class ToolsClass():
             return url
         if url.find('https://') > -1:
             url = url.replace('https://', '')
-            url = 'http"//'+url
+            url = 'http"//' + url
             return url
         if url.find('http://') < 0:
-            url = 'http://'+url
+            url = 'http://' + url
             return url
