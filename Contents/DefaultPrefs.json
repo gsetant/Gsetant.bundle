@@ -16,5 +16,5 @@
         "label": "Gsetant-Token",
         "type": "text",
         "default": ""
-    },
+    }
 ]

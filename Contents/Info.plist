@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleIdentifier</key>
-	<string>com.plexapp.agents.Gsetant</string>	
-	<key>PlexFrameworkVersion</key>
-	<string>2</string>
-	<key>PlexPluginClass</key>
-	<string>Agent</string>
-	<key>PlexPluginMode</key>
-	<string>AlwaysOn</string>
-	<key>PlexPluginCodePolicy</key>
-	<string>Elevated</string>
-	<key>PlexAgentAttributionText</key>
-	<string>
-	<![CDATA[]]>
-</string>
+	<dict>
+		<key>CFBundleIdentifier</key>
+			<string>com.plexapp.agents.Gsetant</string>		
+		<key>PlexClientPlatforms</key>
+			<string>*</string>
+		<key>PlexFrameworkVersion</key>
+			<string>2</string>
+		<key>PlexPluginCodePolicy</key>
+			<string>Elevated</string>
+		<key>PlexPluginConsoleLogging</key>
+			<string>0</string>
+		<key>PlexPluginClass</key>
+			<string>Agent</string>
+		<key>PlexPluginMode</key>
+			<string>AlwaysOn</string>
+		<key>PlexAgentAttributionText</key>
+			<string>
+				<![CDATA[]]>
+			</string>
 </dict>
 </plist>
