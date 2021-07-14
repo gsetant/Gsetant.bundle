@@ -361,7 +361,7 @@ class ToolsClass():
             return url
         if url.find('https://') > -1:
             url = url.replace('https://', '')
-            url = 'http"//' + url
+            url = 'https://' + url
             return url
         if url.find('http://') < 0:
             url = 'http://' + url
