@@ -21,7 +21,7 @@ logd = Log.Debug
 
 PREFIX = '/video/Gsetant'
 NAME = 'Gsetant'
-VERSION = 'Beta:0.0.1'
+VERSION = 'Beta:0.0.3'
 PMS_URL = 'http://127.0.0.1:32400/'
 
 # try:
