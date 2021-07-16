@@ -1,5 +1,7 @@
 # Gsetant.bundle
 
+#### [English](README.md) [简体中文](README-cn.md)
+
 #### Gsetant.bundle is the supporting plugin of Gsetant. In order to use Gsetant, you need to install this plugin to you Plex server.
 
 #### [How to install plugin into Plex ](https://github.com/Tosslog/PlexMediaServer/wiki/Plex-%E6%8F%92%E4%BB%B6-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4)

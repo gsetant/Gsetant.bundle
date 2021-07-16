@@ -1,5 +1,8 @@
 # Gsetant.bundle
 
+#### [English](README.md) [简体中文](README-cn.md)
+
+
 #### Gsetant.bundle 为Gsetant的plex插件支持端。使用Gestant提供的服务需要在Plex服务器中正确安装和配置本插件。
 
 #### Plex 插件安装和配置可参考[此链接](https://github.com/Tosslog/PlexMediaServer/wiki/Plex-%E6%8F%92%E4%BB%B6-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%88%A0%E9%99%A4)
